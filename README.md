@@ -1,2 +1,2 @@
-# Xor encryptor written in c 
+# Xor encryptor/decryptor written in c 
 # work in progress...
