@@ -13,6 +13,33 @@ typedef struct{
 	char *output_file;
 } Tooloptions;
 
+void help_menu() {
+    printf("XorCrypt - XOR Encryption Tool\n\n");
+    printf("Usage:\n");
+    printf("  XorCrypt -e -i <input_file> -k <key> -o <output_file>\n");
+    printf("  XorCrypt -d -i <input_file> -kf <keyfile> -o <output_file>\n\n");
+    
+    printf("Description:\n");
+    printf("  XorCrypt is a simple tool for encrypting and decrypting files using XOR encryption.\n");
+    printf("  It requires a key (provided as a string or a file) and supports both encryption (-e)\n");
+    printf("  and decryption (-d) modes. Use the same key or keyfile for both encryption and decryption.\n\n");
+
+    printf("Options:\n");
+    printf("  -e               Encrypt the input file.\n");
+    printf("  -d               Decrypt the input file.\n");
+    printf("  -i <input_file>  Specify the input file to encrypt or decrypt.\n");
+    printf("  -k <key>         Provide the encryption/decryption key as a string.\n");
+    printf("  -kf <keyfile>    Provide the encryption/decryption key as a file.\n");
+    printf("  -o <output_file> Specify the output file for the encrypted or decrypted data.\n\n");
+
+    printf("Example Usage:\n");
+    printf("  Encrypt using a key string:\n");
+    printf("    XorCrypt -e -i input_file.txt -k \"mysecretkey\" -o encrypted_output.txt\n\n");
+    printf("  Decrypt using a keyfile:\n");
+    printf("    XorCrypt -d -i encrypted_output.txt -kf keyfile.txt -o decrypted_output.txt\n\n");
+		exit(0);
+}
+
 void error_occured(){
 		printf("Error occured please read the help manual again\n");
 		exit(1);
@@ -32,21 +59,24 @@ void print_options(Tooloptions *options){
 }
 
 int parse_arguments(int argc , char *argv[] , Tooloptions* options){
-	if(argc != 6 && argc != 8){
+	if(argc != 6 && argc != 8 && argc != 2){
 		return 0;
 	}
 	if(strcmp(argv[1],"-decrypt") == 0 || strcmp(argv[1],"-d") == 0){
 		options->operation = 2;
 	}else if(strcmp(argv[1] , "-encrypt") == 0 || strcmp(argv[1],"-e") == 0){
 		options->operation = 1;
+	}else if(strcmp(argv[1], "-help") == 0 || strcmp(argv[1] , "-h") == 0){
+		help_menu();
 	}else{
 		return 0;
 	}
-
-	if(strcmp(argv[2],"-if") != 0 && strcmp(argv[2],"-h") != 0){
+	printf("%d",12);
+	if(strcmp(argv[2],"-if") == 0){
+		options->input_file = argv[3]; 
+	}else{
 		return 0;
 	}
-	options->input_file = argv[3]; 
 
 	if(strcmp(argv[4],"-k") != 0 && strcmp(argv[4],"-kf") != 0){
 		return 0;
