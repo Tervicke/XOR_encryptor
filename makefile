@@ -1,3 +1,5 @@
 all:
-	gcc main.c
-	./a.exe -d -if inputfile -k mykey -of output_file
+	gcc main.c -o XorCrypt
+	./XorCrypt.exe -h -if inputfile -k mykey -of output_file
+compile:
+	gcc main.c -o XorCrypt
