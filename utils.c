@@ -27,3 +27,9 @@ void help_menu() {
     printf("    XorCrypt -d -i encrypted_output.txt -kf keyfile.txt -o decrypted_output.txt\n\n");
 		exit(0);
 }
+
+char* get_key_by_file(char* key_file){
+	char* default_key = "xorcryptdefaultkey123";
+	//implement the file reading and storing the key ;
+	return default_key;
+}

@@ -5,19 +5,30 @@
 #include<string.h>
 
 void help_menu();
-void encypt();
-void decrypt();
+int crypt();
+char* get_key_by_file();
 
 typedef struct{
 	char *input_file; // mandatory
 	char *key_file; // 
-	int use_key;
+	int use_key; // 1 if the user has given key
 	char *key;
 	int use_output_file;
 	int operation; // 1 for encrypt 2 for decrypt
 	char *output_file;
 } Tooloptions;
 
+
+int crypt(Tooloptions *options){ // return 1 if no error else return 0;
+	char* key;
+	if(options->use_key == 1){
+		key = options->key;
+	}else{
+		key = get_key_by_file(options->key_file);
+	}
+	printf("%s\n",key);
+	return 1; 
+}
 
 void error_occured(){
 		printf("Error occured please read the help manual again\n");
@@ -50,7 +61,6 @@ int parse_arguments(int argc , char *argv[] , Tooloptions* options){
 	}else{
 		return 0;
 	}
-	printf("%d",12);
 	if(strcmp(argv[2],"-if") == 0){
 		options->input_file = argv[3]; 
 	}else{
@@ -85,18 +95,9 @@ int main(int argc , char *argv[]){
 		error_occured();
 	}
 	//print_options(&options);  //testing
-	if( crypt(&options) ) {
+	if( crypt(&options) == 1) {
 		printf("done...success");
 	};
 	return 0;
 }
 
-int crypt(Tooloptions *options){
-
-	if(options->operation == 1){
-		return encrypt(); // encrypt returns 1 if operation is success else returns error;
-	}else{
-		return decrypt(); // same as encrypt;
-	}
-
-}
