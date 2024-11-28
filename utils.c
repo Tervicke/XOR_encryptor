@@ -40,7 +40,7 @@ char* get_key_by_file(char* key_file){
 	int index = 0;
 	size_t size = 0;
 	while((ch = fgetc(fptr)) != EOF){
-		if(ch < 32 || ch > 126){
+		if(ch < 32 || ch > 126){ //ignore all the non printable ascii characters 
 			continue;
 		}
 		key = (char *)realloc(key, size + 1);
