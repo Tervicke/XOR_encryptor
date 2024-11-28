@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 void help_menu() {
     printf("XorCrypt - XOR Encryption Tool\n\n");
@@ -27,9 +28,32 @@ void help_menu() {
     printf("    XorCrypt -d -i encrypted_output.txt -kf keyfile.txt -o decrypted_output.txt\n\n");
 		exit(0);
 }
-
 char* get_key_by_file(char* key_file){
-	char* default_key = "xorcryptdefaultkey123";
-	//implement the file reading and storing the key ;
-	return default_key;
+	FILE *fptr = fopen(key_file,"r");
+	printf("keyfile %s\n",key_file);
+	if(fptr == NULL){
+		printf("ERROR... Keyfile not found \n");
+		exit(1);
+	}
+	char *key = NULL;
+	char ch;
+	int index = 0;
+	size_t size = 0;
+	while((ch = fgetc(fptr)) != EOF){
+		if(ch < 32 || ch > 126){
+			continue;
+		}
+		key = (char *)realloc(key, size + 1);
+		if(key == NULL){
+			printf("Memory allocation failed... while resizing buffer for key\n");
+			fclose(fptr);
+			exit(1);
+		}
+		key[index++] = ch;
+		size++;
+	}
+	key = (char *)realloc(key, size + 1);
+	key[index] = '\0';
+	fclose(fptr);
+	return key; 
 }
