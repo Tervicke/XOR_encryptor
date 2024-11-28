@@ -71,7 +71,7 @@ int parse_arguments(int argc , char *argv[] , Tooloptions* options){
 		return 0;
 	}
 	if( strcmp(argv[4],"-kf") == 0){
-		options->key_file = argv[4];
+		options->key_file = argv[5];
 		options->use_key = 0;
 	}else{
 		options->use_key = 1; // make true
