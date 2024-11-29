@@ -13,7 +13,7 @@ typedef struct{
 	char *key_file; // 
 	int use_key; // 1 if the user has given key
 	char *key;
-	int use_output_file;
+	int use_output_file; // 1 if output file given 0 if not 
 	int operation; // 1 for encrypt 2 for decrypt
 	char *output_file;
 } Tooloptions;
@@ -26,7 +26,44 @@ int crypt(Tooloptions *options){ // return 1 if no error else return 0;
 	}else{
 		key = get_key_by_file(options->key_file);
 	}
+	int key_length = strlen(key);
+	if(key_length == 0){
+		printf("Error Key is empty..\n");
+		exit(1);
+	}
+
 	printf("%s\n",key);
+	FILE *inputftpr = fopen(options->input_file,"rb");
+	if(inputftpr == NULL){
+		printf("Error opening the input file \n");
+		exit(1);
+	}
+	if(options->use_output_file == 0){
+		if(options->operation == 1){
+			options->output_file = "xorencryptfile";
+		}else{
+			options->output_file = "xordecryptfile";
+		}
+	}
+
+	FILE *outputftpr = fopen(options->output_file,"wb");
+	if(outputftpr == NULL){
+		printf("Error opening the output file \n");
+		exit(1);
+	}
+
+	char ch;
+	int index = 0;
+	while((ch = fgetc(inputftpr)) != EOF){
+		
+		//encrypt character
+		ch = ch ^ key[index];
+		putc(ch , outputftpr);
+		index = (index + 1) % key_length;
+
+	}
+	fclose(inputftpr);
+	fclose(outputftpr);
 	return 1; 
 }
 
