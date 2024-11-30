@@ -7,6 +7,8 @@
 void help_menu();
 int crypt();
 char* get_key_by_file();
+void success_message();
+
 
 typedef struct{
 	char *input_file; // mandatory
@@ -18,6 +20,20 @@ typedef struct{
 	char *output_file;
 } Tooloptions;
 
+void success_message(Tooloptions *options) {
+    printf("Success: ");
+
+    if (options->operation == 1) {
+        printf("Encrypted ");
+    } else if (options->operation == 2) {
+        printf("Decrypted ");
+    } else {
+        printf("Performed unknown operation ");
+    }
+
+    printf("'%s' ", options->input_file);
+    printf("to '%s'.\n", options->output_file);
+}
 
 int crypt(Tooloptions *options){ // return 1 if no error else return 0;
 	char* key;
@@ -32,7 +48,6 @@ int crypt(Tooloptions *options){ // return 1 if no error else return 0;
 		exit(1);
 	}
 
-	printf("%s\n",key);
 	FILE *inputftpr = fopen(options->input_file,"rb");
 	if(inputftpr == NULL){
 		printf("Error opening the input file \n");
@@ -64,6 +79,9 @@ int crypt(Tooloptions *options){ // return 1 if no error else return 0;
 	}
 	fclose(inputftpr);
 	fclose(outputftpr);
+
+	success_message(options);
+
 	return 1; 
 }
 
@@ -133,8 +151,8 @@ int main(int argc , char *argv[]){
 	}
 	//print_options(&options);  //testing
 	if( crypt(&options) == 1) {
-		printf("done...success");
+		return 0;
 	};
-	return 0;
+	return 1;
 }
 

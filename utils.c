@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
-
 void help_menu() {
     printf("XorCrypt - XOR Encryption Tool\n\n");
     printf("Usage:\n");
@@ -30,7 +29,6 @@ void help_menu() {
 }
 char* get_key_by_file(char* key_file){
 	FILE *fptr = fopen(key_file,"r");
-	printf("keyfile %s\n",key_file);
 	if(fptr == NULL){
 		printf("ERROR... Keyfile not found \n");
 		exit(1);
