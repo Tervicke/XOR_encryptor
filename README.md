@@ -1,5 +1,4 @@
 # Xor encryptor/decryptor written in c 
-# work in progress...
 
 XorCrypt - XOR Encryption Tool
 ==============================
